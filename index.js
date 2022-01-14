@@ -18,7 +18,7 @@ function verifyPostData(req, res, next) {
   
 	const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8')
 	const hmac = crypto.createHmac(sigHashAlg, process.env.PWD)
-	console.log(typeof(sigHashAlg + '=' + hmac.update(req.body).digest('hex')));
+	console.log(typeof(sigHashAlg + '=' + hmac.update(req.rawBody).digest('hex')));
 	console.log("OK");
 	const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.body).digest('hex'), 'utf8')
 	console.log("ok3 ");
@@ -31,6 +31,15 @@ function verifyPostData(req, res, next) {
 
 
 app.use(express.json());
+
+app.use(function(req, res, next){
+	var data = "";
+	req.on('data', function(chunk){ data += chunk})
+	req.on('end', function(){
+	   req.rawBody = data;
+	   next();
+	})
+ })
 
 app.post("/WebHookUpdates", verifyPostData, (req, res)=>{
     console.log(req.body);

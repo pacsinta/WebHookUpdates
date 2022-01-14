@@ -3,8 +3,7 @@ const https =require('https');
 const fs = require('fs');
 require('dotenv').config();
 
-const PORT = 1212;
-
+const PORT = 3001;
 
 const app = express();
 
@@ -12,9 +11,8 @@ app.use(express.json({ limit: "1kb" }));
 
 app.post("/WebHookUpdates", (req, res)=>{
     console.log(req.body);
-    res.sendStatus(200);
+    res.json({text: "test"});
 });
-
 
 // Certificate
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/cstcompany.ddns.net/privkey.pem', 'utf8');

@@ -17,10 +17,8 @@ function verifyPostData(req, res, next) {
 	}
   
 	const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8')
-	console.log("ok1");
-	const hmac = crypto.createHmac(sigHashAlg, 'a'.toString())
-	console.log("ok2");
-	const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.rawBody).digest('hex'), 'utf8')
+	const hmac = crypto.createHmac(sigHashAlg, process.env.PWD)
+	const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.body).digest('hex'), 'utf8')
 	console.log("ok3 ");
 	if (sig.length !== digest.length || !crypto.timingSafeEqual(digest, sig)) {
 	  return next(`Request body digest (${digest}) did not match ${sigHeaderName} (${sig})`)

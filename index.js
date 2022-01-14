@@ -18,6 +18,7 @@ function verifyPostData(req, res, next) {
   
 	const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8')
 	const hmac = crypto.createHmac(sigHashAlg, process.env.PWD)
+	console.log(typeof(sigHashAlg + '=' + hmac.update(req.body).digest('hex')));
 	const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.body).digest('hex'), 'utf8')
 	console.log("ok3 ");
 	if (sig.length !== digest.length || !crypto.timingSafeEqual(digest, sig)) {

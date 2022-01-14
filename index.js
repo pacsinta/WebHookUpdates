@@ -7,6 +7,8 @@ const PORT = 3001;
 
 const app = express();
 
+const sigHeaderName = 'X-Hub-Signature-256'
+const sigHashAlg = 'sha256'
 
 function verifyPostData(req, res, next) {
 	if (req.body.constructor === Object && Object.keys(req.body).length === 0) {

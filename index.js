@@ -32,4 +32,3 @@ httpsServer.listen(PORT, () => {
 	console.log(`GithubWebhook is running!`);
     console.log(`Port: ${PORT}`);
 });
-

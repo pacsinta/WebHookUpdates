@@ -9,7 +9,7 @@ const app = express();
 
 
 function verifyPostData(req, res, next) {
-	if (!req.rawBody) {
+	if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
 	  return next('Request body empty')
 	}
   

@@ -7,9 +7,26 @@ const PORT = 3001;
 
 const app = express();
 
+
+function verifyPostData(req, res, next) {
+	if (!req.rawBody) {
+	  return next('Request body empty')
+	}
+  
+	const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8')
+	const hmac = crypto.createHmac(sigHashAlg, process.env.PWD)
+	const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.rawBody).digest('hex'), 'utf8')
+	if (sig.length !== digest.length || !crypto.timingSafeEqual(digest, sig)) {
+	  return next(`Request body digest (${digest}) did not match ${sigHeaderName} (${sig})`)
+	}
+  
+	return next()
+}
+
+
 app.use(express.json());
 
-app.post("/WebHookUpdates", (req, res)=>{
+app.post("/WebHookUpdates", verifyPostData, (req, res)=>{
     console.log(req.body);
     res.json({text: "test"});
 });

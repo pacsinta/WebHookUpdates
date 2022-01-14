@@ -1,5 +1,6 @@
 const express = require('express');
 const https =require('https');
+const fs = require('fs');
 require('dotenv').config();
 
 const PORT = 1212;
@@ -27,7 +28,7 @@ const credentials = {
 };
 
 const httpsServer = https.createServer(credentials, app);
-httpsServer.listen(httpsPORT, () => {
+httpsServer.listen(PORT, () => {
 	console.log(`GithubWebhook is running!`);
     console.log(`Port: ${PORT}`);
 });

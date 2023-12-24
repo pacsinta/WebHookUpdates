@@ -18,6 +18,8 @@ jobs:
           java-version: '21'
           distribution: 'oracle'
           cache: 'gradle'
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
       - run: ./gradlew buildFatJar
       - uses: actions/upload-artifact@v4
         with:

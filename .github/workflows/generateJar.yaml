@@ -26,3 +26,5 @@ jobs:
           name: Package
           path: staging
           retention-days: 90
+      - name: Create Release
+        run: gh release create ${GITHUB_REF#refs/*/} -t ${GITHUB_REF#refs/*/}

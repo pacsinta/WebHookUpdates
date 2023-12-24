@@ -16,7 +16,6 @@ class ApplicationTest {
     fun testRoot() = testApplication {
         application {
             configureWebhooks()
-            clearWebhooks()
             configureRouting()
         }
 

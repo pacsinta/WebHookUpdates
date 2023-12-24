@@ -27,26 +27,23 @@ fun Application.configureRouting() {
                     return@post
                 }
 
-                if(webhook.command.isNotEmpty())
-                {
-                    val command = mutableListOf<String>()
-                    if(os == OS.WINDOWS) {
-                        command.add("cmd")
-                        command.add("/c")
-                    }
+                val command = mutableListOf<String>()
+                if(os == OS.WINDOWS) {
+                    command.add("cmd")
+                    command.add("/c")
+                }
 
-                    command.add(webhook.command)
-                    val process = ProcessBuilder(command)
-                        .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-                        .redirectError(ProcessBuilder.Redirect.INHERIT)
-                        .start()
+                command.add(webhook.command)
+                val process = ProcessBuilder(command)
+                    .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+                    .redirectError(ProcessBuilder.Redirect.INHERIT)
+                    .start()
 
-                    if(!webhook.async) {
-                        process.waitFor(
-                            webhook.timeoutSeconds.toLong(),
-                            java.util.concurrent.TimeUnit.SECONDS
-                        )
-                    }
+                if(!webhook.async) {
+                    process.waitFor(
+                        webhook.timeoutSeconds.toLong(),
+                        java.util.concurrent.TimeUnit.SECONDS
+                    )
                 }
 
                 call.response.status(HttpStatusCode.OK)

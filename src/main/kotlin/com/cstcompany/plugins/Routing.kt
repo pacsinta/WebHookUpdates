@@ -2,6 +2,7 @@ package com.cstcompany.plugins
 
 import WebhookDTO
 import com.cstcompany.getOS
+import com.cstcompany.runCommand
 import com.cstcompany.webhooks
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -27,23 +28,9 @@ fun Application.configureRouting() {
                     return@post
                 }
 
-                val command = mutableListOf<String>()
-                if(os == OS.WINDOWS) {
-                    command.add("cmd")
-                    command.add("/c")
-                }
-
-                command.add(webhook.command)
-                val process = ProcessBuilder(command)
-                    .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-                    .redirectError(ProcessBuilder.Redirect.INHERIT)
-                    .start()
-
-                if(!webhook.async) {
-                    process.waitFor(
-                        webhook.timeoutSeconds.toLong(),
-                        java.util.concurrent.TimeUnit.SECONDS
-                    )
+                if(webhook.command.isNotEmpty())
+                {
+                    runCommand(webhook.command, webhook.async, webhook.timeoutSeconds, os)
                 }
 
                 call.response.status(HttpStatusCode.OK)

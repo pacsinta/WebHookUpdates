@@ -1,6 +1,0 @@
-ktor:
-  deployment:
-    port: 3000
-  application:
-    modules:
-      - com.cstcompany.ApplicationKt.module

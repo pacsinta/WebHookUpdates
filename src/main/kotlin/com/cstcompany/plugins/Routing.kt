@@ -42,7 +42,7 @@ fun Application.configureRouting() {
 
                 if(!webhook.async) {
                     process.waitFor(
-                        10,
+                        webhook.timeoutSeconds.toLong(),
                         java.util.concurrent.TimeUnit.SECONDS
                     )
                 }

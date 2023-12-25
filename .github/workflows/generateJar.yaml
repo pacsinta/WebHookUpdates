@@ -28,3 +28,5 @@ jobs:
           retention-days: 90
       - name: Create Release
         run: gh release create ${GITHUB_REF#refs/*/} -t ${GITHUB_REF#refs/*/}
+      - name: Upload Artifact to Release
+        run: gh release upload  ${GITHUB_REF#refs/*/} build/libs/*.jar

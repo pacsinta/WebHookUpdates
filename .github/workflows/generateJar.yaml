@@ -27,4 +27,6 @@ jobs:
           path: staging
           retention-days: 90
       - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
         run: gh release create ${GITHUB_REF#refs/*/} -t ${GITHUB_REF#refs/*/}

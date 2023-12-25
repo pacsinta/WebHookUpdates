@@ -27,8 +27,8 @@ jobs:
       - name: Create Release
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
-        run: gh release create ${{ github.run_number }} -t ${{ github.run_number }}
+        run: gh release create v${{ github.run_number }} -t v${{ github.run_number }}
       - name: Upload Artifact to Release
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
-        run: gh release upload  ${{ github.run_number }} build/libs/*.jar
+        run: gh release upload  v${{ github.run_number }} build/libs/*.jar

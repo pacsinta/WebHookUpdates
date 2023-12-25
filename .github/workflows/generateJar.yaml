@@ -29,4 +29,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
         run: gh release create ${GITHUB_REF#refs/*/} -t ${GITHUB_REF#refs/*/}
       - name: Upload Artifact to Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
         run: gh release upload  ${GITHUB_REF#refs/*/} build/libs/*.jar

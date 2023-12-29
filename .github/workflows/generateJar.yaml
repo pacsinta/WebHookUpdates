@@ -19,6 +19,9 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - run: ./gradlew buildFatJar
+        name: build FatJar
+      - run: ./gradlew installDist
+        name: Build executable
       - uses: actions/upload-artifact@v4
         with:
           name: Package
@@ -28,7 +31,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
         run: gh release create v${{ github.run_number }} -t v${{ github.run_number }}
-      - name: Upload Artifact to Release
+      - name: Upload FatJar to Release
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
         run: gh release upload  v${{ github.run_number }} build/libs/*.jar
+      - name: Upload Executable to Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASETOKEN }}
+        run: gh release upload  v${{ github.run_number }} build/install/WebHookUpdates/bin/WebHookUpdates
+

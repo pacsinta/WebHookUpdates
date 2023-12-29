@@ -19,3 +19,7 @@ You can also override these parameters for each webhook:
 - `url`: Defines the url where the program should listen for the webhooks. (By default it is the repository name: /{repo})
 - `asyn`: If set to true, the program will run the command in a new thread. (By default it is false)
 - `timeoutSeconds`: Defines the timeout for the command. In async mode it has no effect! (By default it is 10 seconds)
+
+## Deployment
+One method to build the application is the `./gradlew installDist` command. It'll create an image of the application in the build/install/<project_name> folder.
+You can read more about the deployment in the [ktor documentation](https://ktor.io/docs/deploy.html).
